@@ -1,4 +1,4 @@
-package com.example.time_tracking_app
+package fr.regneugneux.time_tracking
 
 import io.flutter.embedding.android.FlutterActivity
 
