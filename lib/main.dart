@@ -1,11 +1,16 @@
+// main.dart
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:time_tracking_app/models/time_data.dart';
 import 'package:time_tracking_app/procrastinating_page.dart';
+import 'package:time_tracking_app/widget/time_ratio.dart';
 import 'package:time_tracking_app/working_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 void main() {
   runApp(const TimeTrackingApp());
@@ -191,9 +196,10 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
   Widget build(BuildContext context) {
     Duration dailyTargetDuration = Duration(hours: selectedDailyTarget);
     Duration weeklyTargetDuration = Duration(hours: selectedWeeklyTarget);
-    Color backgroundColor = const Color.fromARGB(255, 226, 194, 194);
-    Color appBarColor = const Color.fromARGB(255, 149, 136, 136);
-    Color progressBarColor = const Color.fromARGB(255, 149, 136, 136);
+    Color backgroundColor = const Color.fromARGB(255, 85, 173, 228);
+    Color appBarColor = const Color.fromARGB(255, 3, 74, 106);
+    Color donoughtProgressColor = const Color.fromARGB(255, 3, 74, 106);
+    Color donoughtBackgroundColor = const Color.fromARGB(255, 242, 226, 252);
 
     double dailyProgress = dailyTargetDuration.inSeconds > 0
         ? totalTimeWorkedToday.inSeconds / dailyTargetDuration.inSeconds
@@ -204,9 +210,9 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Prosaic Time Tracking',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: donoughtBackgroundColor),
         ),
         backgroundColor: appBarColor,
       ),
@@ -238,8 +244,24 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                                     '$target hour${target > 1 ? 's' : ''}'),
                               );
                             }).toList(),
-                            decoration: const InputDecoration(
-                              labelText: 'Today Target',
+                            decoration: InputDecoration(
+                              labelText: "Today's Target",
+                              labelStyle: TextStyle(color: appBarColor),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when enabled
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when focused
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when there is an error
+                              ),
                             ),
                           ),
                         ),
@@ -258,37 +280,96 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                                 child: Text('$target hours'),
                               );
                             }).toList(),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Weekly Target',
+                              labelStyle: TextStyle(color: appBarColor),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when enabled
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when focused
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        appBarColor), // Set the underline color when there is an error
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
-                        onPressed: isWorking ? null : startWorking,
-                        child: const Text(
-                          'Start working',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 3, 74, 106),
+                        onPressed: startWorking,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: appBarColor,
+                          foregroundColor: donoughtBackgroundColor,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Symbols.step,
+                                color: donoughtBackgroundColor), // Example icon
+                            const SizedBox(
+                                width: 8), // Space between icon and text
+                            Text(
+                              "Start working",
+                              style: TextStyle(color: donoughtBackgroundColor),
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'Or',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: appBarColor,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
                       ElevatedButton(
                         onPressed: startProcrastinating,
-                        child: const Text("No I'll procrastinating instead",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 3, 74, 106),
-                            )),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: appBarColor,
+                          foregroundColor: donoughtBackgroundColor,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Symbols.arrow_split,
+                                color: donoughtBackgroundColor), // Example icon
+                            const SizedBox(
+                                width: 8), // Space between icon and text
+                            Text(
+                              "No I'll procrastinate instead",
+                              style: TextStyle(color: donoughtBackgroundColor),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
                   if (!isWorking)
                     Column(
                       children: [
@@ -298,30 +379,23 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                             alignment: Alignment.center,
                             children: [
                               SizedBox(
-                                height: 200,
-                                width: 200,
+                                height: 160,
+                                width: 160,
                                 child: CircularProgressIndicator(
                                   value: dailyProgress,
                                   strokeWidth: 20,
-                                  backgroundColor: Colors.grey[300],
+                                  backgroundColor: donoughtBackgroundColor,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      progressBarColor),
+                                      donoughtProgressColor),
                                 ),
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    'Today',
+                                    "Today's work",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${(dailyProgress * 100).toStringAsFixed(1)}%',
-                                    style: const TextStyle(
-                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -336,21 +410,21 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 20),
                         SizedBox(
                           height: 200,
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
                               SizedBox(
-                                height: 200,
-                                width: 200,
+                                height: 160,
+                                width: 160,
                                 child: CircularProgressIndicator(
                                   value: weeklyProgress,
                                   strokeWidth: 20,
-                                  backgroundColor: Colors.grey[300],
+                                  backgroundColor: donoughtBackgroundColor,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      progressBarColor),
+                                      donoughtProgressColor),
                                 ),
                               ),
                               Column(
@@ -360,13 +434,6 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                                     'Last 7 days',
                                     style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${(weeklyProgress * 100).toStringAsFixed(1)}%',
-                                    style: const TextStyle(
-                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -400,61 +467,32 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        const Text(
-                          'Work / Procrastination',
-                          style: TextStyle(
-                            fontSize: 16,
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black, // Set the default text color
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Procrastination',
+                                style:
+                                    TextStyle(color: donoughtBackgroundColor),
+                              ),
+                              const TextSpan(text: ' / '),
+                              TextSpan(
+                                text: 'Work',
+                                style: TextStyle(color: appBarColor),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 200,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: BarChart(
-                              BarChartData(
-                                alignment: BarChartAlignment.spaceBetween,
-                                titlesData: FlTitlesData(
-                                  leftTitles: const AxisTitles(),
-                                  rightTitles: const AxisTitles(),
-                                  topTitles: const AxisTitles(),
-                                  bottomTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      getTitlesWidget: (value, meta) {
-                                        const style = TextStyle(fontSize: 10);
-                                        String text;
-                                        switch (value.toInt()) {
-                                          case 0:
-                                            text = 'Work';
-                                            break;
-                                          case 1:
-                                            text = 'Procrastination';
-                                            break;
-                                          default:
-                                            text = '';
-                                        }
-                                        return SideTitleWidget(
-                                          axisSide: meta.axisSide,
-                                          child: Text(text, style: style),
-                                        );
-                                      },
-                                      reservedSize: 30,
-                                    ),
-                                  ),
-                                ),
-                                barTouchData: BarTouchData(enabled: false),
-                                borderData: FlBorderData(show: false),
-                                gridData: const FlGridData(show: false),
-                                barGroups: [
-                                  generateGroupData(
-                                      0,
-                                      totalTimeWorkedToday.inSeconds.toDouble(),
-                                      totalTimeProcrastinatedToday.inSeconds
-                                          .toDouble()),
-                                ],
-                              ),
-                            ),
+                        TimeRatio(
+                          data: TimeData(
+                            totalTimeWorkedToday:
+                                totalTimeWorkedToday.inSeconds,
+                            totalTimeProcrastinatedToday:
+                                totalTimeProcrastinatedToday.inSeconds,
                           ),
                         ),
                         ElevatedButton(
@@ -472,12 +510,12 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
               RichText(
                 text: TextSpan(
                   text: 'made by ',
-                  style: const TextStyle(color: Colors.black),
+                  style: TextStyle(color: appBarColor),
                   children: [
                     TextSpan(
                       text: 'maison-regneugneux.fr',
-                      style: const TextStyle(
-                          color: Colors.blue,
+                      style: TextStyle(
+                          color: donoughtBackgroundColor,
                           decoration: TextDecoration.underline),
                       recognizer: TapGestureRecognizer()
                         ..onTap =
@@ -546,11 +584,4 @@ class TimelinePainter extends CustomPainter {
   @override
   bool shouldRepaint(TimelinePainter oldDelegate) =>
       oldDelegate.procrastinationPeriods != procrastinationPeriods;
-}
-
-class TimeData {
-  final String label;
-  final Duration time;
-
-  TimeData(this.label, this.time);
 }

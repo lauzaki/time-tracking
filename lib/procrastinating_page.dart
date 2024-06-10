@@ -15,6 +15,7 @@ class ProcrastinationPageState extends State<ProcrastinationPage>
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this,
