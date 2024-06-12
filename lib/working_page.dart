@@ -58,9 +58,13 @@ class WorkingPageState extends State<WorkingPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _stopWorking,
+               style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                        ),
               child: const Text('Stop working for now',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color:  Color.fromARGB(255, 3, 74, 106),
                 ),

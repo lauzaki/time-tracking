@@ -22,7 +22,7 @@ class TimeTrackingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Prosaic Time Tracking',
+      title: 'Mini Time Track',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.robotoTextTheme(
@@ -211,7 +211,7 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Prosaic Time Tracking',
+          'mini time track',
           style: TextStyle(color: donoughtBackgroundColor),
         ),
         backgroundColor: appBarColor,
@@ -316,7 +316,7 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Row(
@@ -328,7 +328,10 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                                 width: 8), // Space between icon and text
                             Text(
                               "Start working",
-                              style: TextStyle(color: donoughtBackgroundColor),
+                              style: TextStyle(
+                                color: donoughtBackgroundColor,
+                                fontSize: 18,
+                                ),
                             ),
                           ],
                         ),
@@ -350,19 +353,22 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Symbols.arrow_split,
-                                color: donoughtBackgroundColor), // Example icon
+                                color: donoughtBackgroundColor),
                             const SizedBox(
-                                width: 8), // Space between icon and text
+                                width: 8),
                             Text(
-                              "No I'll procrastinate instead",
-                              style: TextStyle(color: donoughtBackgroundColor),
+                              "No instead I'll\nprocrastinate",
+                              style: TextStyle(
+                                color: donoughtBackgroundColor,
+                                fontSize: 18,
+                                ),
                             ),
                           ],
                         ),
@@ -509,7 +515,7 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
               const SizedBox(height: 20),
               RichText(
                 text: TextSpan(
-                  text: 'made by ',
+                  text: 'by ',
                   style: TextStyle(color: appBarColor),
                   children: [
                     TextSpan(
