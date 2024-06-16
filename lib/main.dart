@@ -1,5 +1,3 @@
-// main.dart
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -148,13 +146,19 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
     });
   }
 
-  Future<void> resetTimers() async {
+  Future<void> resetDailyTimer() async {
     setState(() {
       totalTimeWorkedToday = Duration.zero;
-      totalTimeWorkedWeek = Duration.zero;
       totalTimeProcrastinatedToday = Duration.zero;
-      totalTimeProcrastinatedWeek = Duration.zero;
       procrastinationPeriodsToday.clear();
+    });
+    await _saveData();
+  }
+
+  Future<void> resetWeeklyTimer() async {
+    setState(() {
+      totalTimeWorkedWeek = Duration.zero;
+      totalTimeProcrastinatedWeek = Duration.zero;
     });
     await _saveData();
   }
@@ -331,7 +335,7 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                               style: TextStyle(
                                 color: donoughtBackgroundColor,
                                 fontSize: 18,
-                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -368,7 +372,7 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                               style: TextStyle(
                                 color: donoughtBackgroundColor,
                                 fontSize: 18,
-                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -416,6 +420,20 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: resetDailyTimer,
+                          child: const Text('Reset Daily Timer'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: appBarColor,
+                            foregroundColor: donoughtBackgroundColor,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         SizedBox(
                           height: 200,
@@ -452,6 +470,20 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                                 ],
                               ),
                             ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: resetWeeklyTimer,
+                          child: const Text('Reset Weekly Timer'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: appBarColor,
+                            foregroundColor: donoughtBackgroundColor,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
                         ),
                         Column(
@@ -500,13 +532,6 @@ class TimeTrackingHomePageState extends State<TimeTrackingHomePage> {
                             totalTimeProcrastinatedToday:
                                 totalTimeProcrastinatedToday.inSeconds,
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: resetTimers,
-                          child: const Text('Reset Timers',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 3, 74, 106),
-                              )),
                         ),
                       ],
                     ),
