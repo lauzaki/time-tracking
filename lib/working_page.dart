@@ -43,7 +43,7 @@ class WorkingPageState extends State<WorkingPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontFamily: "Roboto",  
-                fontWeight: FontWeight.w100,
+                fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 167, 221, 255),
               ),
             ),
