@@ -34,12 +34,13 @@ class WorkingPageState extends State<WorkingPage> {
       body: Container(
         color: backgroundColor,
         padding: const EdgeInsets.all(16.0),
+        child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'Well done! You are currently working!',
+              'Working! Woohoo!',
               style: TextStyle(
                 fontSize: 24,
                 fontFamily: "Roboto",  
@@ -48,7 +49,7 @@ class WorkingPageState extends State<WorkingPage> {
               ),
             ),
             const Text(
-              "Now you can stop looking at this phone...",
+              "Now you can focus on your work...",
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -75,6 +76,7 @@ class WorkingPageState extends State<WorkingPage> {
           ],
         ),
       ),
+    ),
     );
   }
 }
